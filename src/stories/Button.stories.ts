@@ -3,6 +3,9 @@ import { fn } from "@storybook/test";
 
 import { Button } from "../components/ui/button";
 
+import { within } from "@storybook/testing-library";
+import { expect } from "@storybook/jest";
+
 const meta = {
   title: "Example/Button",
   component: Button,
@@ -39,6 +42,16 @@ export const Default: Story = {
     variant: "default",
     size: "default",
   },
+};
+
+Default.play = async ({ context }) => {
+  const canvas = within(context.canvasElement);
+  const button = await canvas.findByRole("button", {
+    name: /Button/i,
+  });
+
+  await expect(button).toBeInTheDocument();
+  await expect(button).toHaveTextContent("Button");
 };
 
 export const Destructive: Story = {
