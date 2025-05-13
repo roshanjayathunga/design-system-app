@@ -1,17 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-
+import { userEvent, within, expect } from "@storybook/test";
 import { Button } from "../components/ui/button";
 
-import { within } from "@storybook/testing-library";
-import { expect } from "@storybook/jest";
-
-const meta = {
+const meta: Meta<typeof Button> = {
   title: "Example/Button",
   component: Button,
-  parameters: {
-    layout: "centered",
-  },
+  parameters: { layout: "centered" },
   tags: ["autodocs"],
   argTypes: {
     variant: {
@@ -31,10 +26,10 @@ const meta = {
     },
   },
   args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
@@ -42,16 +37,17 @@ export const Default: Story = {
     variant: "default",
     size: "default",
   },
-};
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = await canvas.findByRole("button", { name: /Button/i });
 
-Default.play = async ({ context }) => {
-  const canvas = within(context.canvasElement);
-  const button = await canvas.findByRole("button", {
-    name: /Button/i,
-  });
+    // Simulate a click
+    await userEvent.click(button);
 
-  await expect(button).toBeInTheDocument();
-  await expect(button).toHaveTextContent("Button");
+    // Assert the button is in the document and has correct text
+    await expect(button).toBeInTheDocument();
+    await expect(button).toHaveTextContent("Button");
+  },
 };
 
 export const Destructive: Story = {
@@ -59,25 +55,11 @@ export const Destructive: Story = {
     children: "Destructive",
     variant: "destructive",
   },
-};
-
-export const Outline: Story = {
-  args: {
-    children: "Outline",
-    variant: "outline",
-  },
-};
-
-export const Large: Story = {
-  args: {
-    children: "Large",
-    size: "lg",
-  },
-};
-
-export const Small: Story = {
-  args: {
-    children: "Small Button",
-    size: "sm",
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = await canvas.findByRole("button", { name: /Destructive/i });
+    await userEvent.click(button);
+    await expect(button).toBeInTheDocument();
+    await expect(button).toHaveTextContent("Destructive");
   },
 };

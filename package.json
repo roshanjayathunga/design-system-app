@@ -11,9 +11,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test-storybook": "test-storybook",
-    "test": "jest"
+    "test": "jest",
+    "e2e": "playwright test"
   },
   "dependencies": {
+    "@storybook/addon-interactions": "^8.6.12",
     "@storybook/jest": "^0.2.2",
     "@storybook/test-runner": "^0.22.0",
     "@storybook/testing-library": "^0.2.1",
