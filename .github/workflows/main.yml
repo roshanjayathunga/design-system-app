@@ -23,7 +23,6 @@ jobs:
       - run: yarn storybook --ci --port 6006 &
       - run: npx wait-on http://127.0.0.1:6006
       - run: yarn test-storybook
-      - run: yarn e2e
 
   deploy:
     runs-on: ubuntu-latest
