@@ -47,7 +47,7 @@ export const Default: Story = {
 Default.play = async ({ context }) => {
   const canvas = within(context.canvasElement);
   const button = await canvas.findByRole("button", {
-    name: /Button/i,
+    name: /Buttons/i,
   });
 
   await expect(button).toBeInTheDocument();
