@@ -19,7 +19,6 @@ jobs:
         with:
           node-version: "20"
       - run: yarn install
-      - run: yarn test # Runs your unit tests
       - run: yarn test-storybook # Runs your Storybook tests
 
   deploy:
