@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: "20"
       - run: yarn install
+      - run: npm test
       - run: npx playwright install --with-deps
       - run: yarn storybook --ci --port 6006 &
       - run: npx wait-on http://127.0.0.1:6006
