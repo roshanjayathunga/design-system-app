@@ -4,25 +4,18 @@ import { userEvent, within, expect } from "@storybook/test";
 import { Button } from "../components/ui/button";
 
 const meta: Meta<typeof Button> = {
-  title: "Example/Button",
+  title: "Components/Button",
   component: Button,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: [
-        "default",
-        "destructive",
-        "outline",
-        "secondary",
-        "ghost",
-        "link",
-      ],
+      options: ["primary", "secondary"],
     },
     size: {
       control: { type: "select" },
-      options: ["default", "sm", "lg", "icon"],
+      options: ["primary", "sm", "lg", "icon"],
     },
   },
   args: { onClick: fn() },
@@ -31,10 +24,10 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {
+export const Primary: Story = {
   args: {
     children: "Button",
-    variant: "default",
+    variant: "primary",
     size: "default",
   },
   play: async ({ canvasElement }) => {
@@ -50,16 +43,16 @@ export const Default: Story = {
   },
 };
 
-export const Destructive: Story = {
+export const Secondary: Story = {
   args: {
-    children: "Destructive",
-    variant: "destructive",
+    children: "Secondary",
+    variant: "secondary",
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = await canvas.findByRole("button", { name: /Destructive/i });
+    const button = await canvas.findByRole("button", { name: /Secondary/i });
     await userEvent.click(button);
     await expect(button).toBeInTheDocument();
-    await expect(button).toHaveTextContent("Destructive");
+    await expect(button).toHaveTextContent("Secondary");
   },
 };
